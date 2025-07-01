@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Platform,
     PermissionsAndroid,
@@ -9,7 +9,7 @@ import { SaveHistory } from '../../../Action/action'
 import Geolocation from "react-native-geolocation-service";
 import Geocoder from "react-native-geocoding";
 export function useHooks(props) {
-    const { navigation, route } = props
+    const { navigation } = props
     const refMap = useRef(null);
     const ref = useRef();
     const searchRef = useRef();
@@ -144,7 +144,7 @@ export function useHooks(props) {
                 .then((json) => {
                     var addressComponent = json.results[0].formatted_address;
                     setpinlocation(addressComponent);
-                    recenterMap(info?.coords?.latitude,info?.coords?.longitude)
+                    recenterMap(info?.coords?.latitude, info?.coords?.longitude)
                 })
                 .catch((error) => {
                     console.warn(error, "errorerror");
@@ -226,6 +226,6 @@ export function useHooks(props) {
         getHistory,
         locationdata,
         ZoomIn,
-        ZoomOut,recenterMap
+        ZoomOut, recenterMap
     }
 }

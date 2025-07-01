@@ -1,11 +1,11 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { } from "react";
 import {
   FlatList,
-  Text,
+ 
   View,
   TouchableOpacity,
-  Modal, Dimensions
+  Modal, 
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -20,7 +20,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { useHooks } from './hooks';
 import TextWrapper from "../../Components/TextWrapper";
 const Map = props => {
-  const { navigation, route } = props;
+
   const {
     refMap,
     ref,
@@ -124,17 +124,10 @@ const Map = props => {
           fetchDetails={true}
           isRowScrollable={false}
           onPress={(data,
-            // details = null
           ) => {
-
             locationdata(data);
             searchRef.current?.setAddressText('');
-
-            // const { lat, lng } = details?.geometry?.location;
-            // recenterMap(lat, lng)
-
           }}
-
           numberOfLines={1}
           styles={{
             textInput: {
@@ -210,7 +203,7 @@ const Map = props => {
                 size={fontSize.twenty}
               />
             </TouchableOpacity>
-            <TextWrapper style={{ fontSize: fontSize.fifteen, fontWeight: 'bold' }} text={'Location History'} />
+            <TextWrapper style={style.heading} text={'Location History'} />
 
           </View>
           <FlatList
@@ -223,18 +216,9 @@ const Map = props => {
             ListEmptyComponent={() => {
               return (
                 <View
-                  style={{
-                    alignSelf: 'center',
-                    height: '100%',
-                    width: '100%',
-                    justifyContent: 'center', alignItems: 'center',
+                  style={style.emptyList}>
 
-                  }}>
-
-                  <TextWrapper style={{
-                    fontSize: fontSize.seventeen,
-                    fontWeight: '600'
-                  }} text={'No History Found'} />
+                  <TextWrapper style={style.emptytext} text={'No History Found'} />
                 </View>
               );
             }}

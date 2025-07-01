@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { fontSize, scalableheight } from "../../Utilities/ResponsiveSheet";
 
 
@@ -31,5 +31,6 @@ export default StyleSheet.create({
     backgroundColor: '#F05252',
     borderWidth: scalableheight.borderwidth,
     borderColor: '#F05252'
-  }
+  },
+  buttontext:{ fontSize: fontSize.fifteen, color: 'white' }
 });

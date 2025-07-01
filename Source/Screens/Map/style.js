@@ -26,8 +26,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: scalableheight.twenty, height: scalableheight.ten,
-    
-    
+
+
   },
 
   LocationtextCard: {
@@ -103,6 +103,18 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: fontSize.twelve,
     paddingLeft: scalableheight.one
-  }
+  },
+  emptyList: {
+    alignSelf: 'center',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center', alignItems: 'center',
+
+  },
+  emptytext: {
+    fontSize: fontSize.seventeen,
+    fontWeight: '600'
+  },
+  heading: { fontSize: fontSize.fifteen, fontWeight: 'bold' }
 
 });
