@@ -5,9 +5,7 @@ import {
 } from "react-native";
 import 'react-native-get-random-values';
 import AsyncStorage from "@react-native-community/async-storage";
-import {SaveHistory} from '../../../Action/action'
-
-
+import { SaveHistory } from '../../../Action/action'
 import Geolocation from "react-native-geolocation-service";
 import Geocoder from "react-native-geocoding";
 export function useHooks(props) {
@@ -15,8 +13,6 @@ export function useHooks(props) {
     const refMap = useRef(null);
     const ref = useRef();
     const searchRef = useRef();
-
-
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [DeltaZoomIn, setDeltaZoomIn] = useState(0.01122);
@@ -25,7 +21,6 @@ export function useHooks(props) {
     const [pinlocation, setpinlocation] = useState("");
     const [SearchHistory, setSearchHistory] = useState(false);
     const [places, Setplaces] = useState();
-    const [Enabled, setEnabled] = useState(false);
 
     React.useEffect(() => {
         const subscribe = navigation.addListener("focus", () => {
@@ -36,11 +31,7 @@ export function useHooks(props) {
 
     const getLocation = async () => {
         setpinlocation("");
-        const hasLocationPermission = await hasLocationPermissions();
-        if (!hasLocationPermission) {
-
-            return;
-        }
+        getnewlocation()
         Geolocation.getCurrentPosition(
             (position) => {
                 const { coords } = position;
@@ -108,57 +99,52 @@ export function useHooks(props) {
         return false;
     };
 
-    const hasLocationPermissionIOS = async () => {
-        const openSetting = () => {
-            Linking.openSettings().catch(() => {
-                console.log("Unable to open settings");
-            });
-        };
-        const status = await Geolocation.requestAuthorization("whenInUse");
+    // const hasLocationPermissionIOS = async () => {
+    //     const openSetting = () => {
+    //         Linking.openSettings().catch(() => {
+    //             console.log("Unable to open settings");
+    //         });
+    //     };
+    //     const status = await Geolocation.requestAuthorization("whenInUse");
 
-        if (status === "granted") {
-            return true;
-        }
+    //     if (status === "granted") {
+    //         return true;
+    //     }
 
-        if (status === "denied") {
-            console.log("Location permission denied");
-        }
+    //     if (status === "denied") {
+    //         console.log("Location permission denied");
+    //     }
 
-        if (status === "disabled") {
-            Alert.alert(
-                `Turn on Location Services to allow Bakery App to determine your location.`,
-                "",
-                [
-                    { text: "Go to Settings", onPress: openSetting },
-                    { text: "Don't Use Location", onPress: () => { } },
-                ]
-            );
-        }
-        return false;
-    };
+    //     if (status === "disabled") {
+    //         Alert.alert(
+    //             `Turn on Location Services to allow Bakery App to determine your location.`,
+    //             "",
+    //             [
+    //                 { text: "Go to Settings", onPress: openSetting },
+    //                 { text: "Don't Use Location", onPress: () => { } },
+    //             ]
+    //         );
+    //     }
+    //     return false;
+    // };
 
     function getnewlocation() {
-        __DEV__ && console.log("locating");
+        setpinlocation('')
         Geocoder.init("AIzaSyDO5bIiYu9EcYO37Omd1tHykC9QjZVL5fA");
         let lat = 0;
         let long = 0;
         Geolocation.getCurrentPosition((info) => {
-            __DEV__ && console.log(info, "INFOOOOFOF");
-
-            console.log(info?.coords?.latitude, "info?.coords?.latitude NEW");
             setinlat(info?.coords?.latitude);
             setinlong(info?.coords?.longitude);
             setLatitude(info?.coords?.latitude);
             setLongitude(info?.coords?.longitude);
-
             lat = info?.coords?.latitude;
             long = info?.coords?.longitude;
-
             Geocoder.from(lat, long)
                 .then((json) => {
                     var addressComponent = json.results[0].formatted_address;
-                    // __DEV__ && console.log(lat, long, "kkkk");
                     setpinlocation(addressComponent);
+                    recenterMap(info?.coords?.latitude,info?.coords?.longitude)
                 })
                 .catch((error) => {
                     console.warn(error, "errorerror");
@@ -221,6 +207,16 @@ export function useHooks(props) {
     const ZoomOut = () => {
         setDeltaZoomIn(DeltaZoomIn * 1.1);
     };
+    const recenterMap = (latitude, longitude) => {
+        if (refMap.current) {
+            refMap.current.animateToRegion({
+                latitude,
+                longitude,
+                latitudeDelta: DeltaZoomIn,
+                longitudeDelta: 0.00121,
+            }, 1000);
+        }
+    };
     return {
         refMap,
         ref,
@@ -230,6 +226,6 @@ export function useHooks(props) {
         getHistory,
         locationdata,
         ZoomIn,
-        ZoomOut,
+        ZoomOut,recenterMap
     }
 }

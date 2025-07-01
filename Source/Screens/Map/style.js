@@ -26,6 +26,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: scalableheight.twenty, height: scalableheight.ten,
+    
+    
   },
 
   LocationtextCard: {

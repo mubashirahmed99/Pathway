@@ -261,15 +261,15 @@
 	[
 		{
 			"backtrace" : 4,
-			"id" : "react_codegen_RNMapsSpecs::@5748abef1962d24942ec"
-		},
-		{
-			"backtrace" : 4,
 			"id" : "react_codegen_safeareacontext::@7984cd80db47aa7b952a"
 		},
 		{
 			"backtrace" : 4,
 			"id" : "react_codegen_rnscreens::@25bcbd507e98d3a854ad"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "react_codegen_RNMapsSpecs::@5748abef1962d24942ec"
 		},
 		{
 			"backtrace" : 4,

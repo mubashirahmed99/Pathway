@@ -5,7 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Modal
+  Modal, Dimensions
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -18,6 +18,7 @@ import CustomStatusBar from '../../Components/CustomStatusBar';
 import Seperator from '../../Components/Seperator';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useHooks } from './hooks';
+import TextWrapper from "../../Components/TextWrapper";
 const Map = props => {
   const { navigation, route } = props;
   const {
@@ -27,7 +28,6 @@ const Map = props => {
     latitude,
     setLatitude,
     DeltaZoomIn,
-    setDeltaZoomIn,
     longitude,
     setLongitude,
     inlat,
@@ -39,7 +39,6 @@ const Map = props => {
     SearchHistory,
     setSearchHistory,
     places,
-    Setplaces,
     getnewlocation,
     getHistory,
     locationdata,
@@ -70,6 +69,7 @@ const Map = props => {
         }}
       >
 
+
         <Marker
           coordinate={{
             latitude: latitude,
@@ -78,9 +78,7 @@ const Map = props => {
         >
           {pinlocation != '' &&
             <View style={style.LocationdesCard}>
-              <Text style={style.LocationtextCard}>
-                {pinlocation}
-              </Text>
+              <TextWrapper style={style.LocationtextCard} text={pinlocation} />
             </View>}
         </Marker>
       </MapView>
@@ -123,11 +121,18 @@ const Map = props => {
         <GooglePlacesAutocomplete
           ref={searchRef}
           placeholder={'Search'}
-
+          fetchDetails={true}
           isRowScrollable={false}
-          onPress={(data) => {
+          onPress={(data,
+            // details = null
+          ) => {
+
             locationdata(data);
             searchRef.current?.setAddressText('');
+
+            // const { lat, lng } = details?.geometry?.location;
+            // recenterMap(lat, lng)
+
           }}
 
           numberOfLines={1}
@@ -205,9 +210,8 @@ const Map = props => {
                 size={fontSize.twenty}
               />
             </TouchableOpacity>
-            <Text style={{ fontSize: fontSize.fifteen, fontWeight: 'bold' }}>
-              Location History
-            </Text>
+            <TextWrapper style={{ fontSize: fontSize.fifteen, fontWeight: 'bold' }} text={'Location History'} />
+
           </View>
           <FlatList
             data={places}
@@ -216,6 +220,24 @@ const Map = props => {
               flexGrow: 1,
             }}
             keyExtractor={(item) => item.id}
+            ListEmptyComponent={() => {
+              return (
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    height: '100%',
+                    width: '100%',
+                    justifyContent: 'center', alignItems: 'center',
+
+                  }}>
+
+                  <TextWrapper style={{
+                    fontSize: fontSize.seventeen,
+                    fontWeight: '600'
+                  }} text={'No History Found'} />
+                </View>
+              );
+            }}
             renderItem={({ item }) => (
               <>
                 <TouchableOpacity
@@ -234,14 +256,7 @@ const Map = props => {
                     color={'#F05252'}
                     size={fontSize.twenty}
                   />
-                  <Text
-                    style={style.listAddress}
-                    numberOfLines={2}
-                  >
-                    {item?.Locationaddress}
-                  </Text>
-
-
+                  <TextWrapper style={style.listAddress} text={item?.Locationaddress} />
                 </TouchableOpacity>
                 <Seperator />
               </>
