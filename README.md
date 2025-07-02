@@ -11,6 +11,9 @@ Start your Android emulator or connect your Android device.
 Then run:
 yarn android
 
+⚠️ Note on iOS 
+Currently, the application has not been tested on iOS due to device limitations.
+
 🗂️ Project Structure
 A general idea of how your project is organized:
 .
