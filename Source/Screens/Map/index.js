@@ -144,7 +144,7 @@ const Map = props => {
             },
           }}
           query={{
-            key: "KEY TO BE ENTERned",
+            key: "AIzaSyC5BzOR9-dFzc_h-S0rVaQsJWJU5vTS148",
             language: 'en',
           }}
         />
