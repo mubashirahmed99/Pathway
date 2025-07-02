@@ -130,7 +130,7 @@ export function useHooks(props) {
 
     function getnewlocation() {
         setpinlocation('')
-        Geocoder.init("AIzaSyDO5bIiYu9EcYO37Omd1tHykC9QjZVL5fA");
+        Geocoder.init("KEY TO BE ENTERned");
         let lat = 0;
         let long = 0;
         Geolocation.getCurrentPosition((info) => {
@@ -173,7 +173,7 @@ export function useHooks(props) {
 
     function locationdata(data) {
         setpinlocation('')
-        Geocoder.init("AIzaSyDO5bIiYu9EcYO37Omd1tHykC9QjZVL5fA");
+        Geocoder.init("KEY TO BE ENTERned");
         Geocoder.from(data.description)
             .then((json) => {
                 var location = json.results[0].geometry.location;
